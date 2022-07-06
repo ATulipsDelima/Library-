@@ -1,4 +1,16 @@
 let myLibrary = [];
+
+// get empty table from html
+let table = document.querySelector("table");
+let add_book = document.querySelector(".add-book")
+let form = document.querySelector("form")
+
+// creating buttons for table
+let remove = document.createElement("button")
+let change = document.createElement("button")
+remove.textContent = "remove"
+change.textContent = "change"
+
 function Book (title, aurthor, pages, read){
     this.title = title
     this.aurthor = aurthor
@@ -16,17 +28,27 @@ Book.prototype.info = function(){
 }
 
 function addBookToLibrary() {
-    let title = prompt("enter title of the book ");
-    let aurthor = prompt("aurthor' name");
-    let pages = prompt("num of pages: ")
-    let read = prompt("have you read it? ")
+    let title = document.querySelector("#title");
+    let aurthor = document.querySelector("#aurthor");
+    let pages = document.querySelector("#pages");
+    let read = document.querySelector("#read");
 
-    let new_book = new Book (title, aurthor, parseInt(pages), Boolean(read));
+    let new_book = new Book (title.value, aurthor.value, parseInt(pages.value), (read.value === 'true'));
+    // clear input boxes
+    title.value = ''
+    aurthor.value =''
+    pages.value = ''
+    read.value = ''
+
     myLibrary.push(new_book)
-    console.log(new_book.info())
+    generateRow(table, new_book)
+    // rehide form
+    form.style.display = "none";
+    console.log(table)
 
 }
 
+//generates table Headers
 function generateTableHead(table, data){
     let thread = table.createTHead();
     let row = thread.insertRow();
@@ -37,8 +59,66 @@ function generateTableHead(table, data){
         th.appendChild(text)
         row.appendChild(th)
     }
+    // add last table header
+    let th = document.createElement("th");
+    let text = document.createTextNode("change status")
+    th.appendChild(text)
+    row.appendChild(th)
+     th = document.createElement("th");
+    text = document.createTextNode("remove")
+    th.appendChild(text)
+    row.appendChild(th)
+
 
 }
+
+// generate talble info (aka all books pre-stored in the array)
+function generateTable(table, data){
+    for (let element of data){
+        let row = table.insertRow()
+        for(key in element){
+            // if value is a function (from prototype) skipp
+            if (typeof element[key] === 'function'){continue};
+            let cell = row.insertCell()
+            let text = document.createTextNode(element[key])
+            cell.appendChild(text)
+        }
+        let remove = document.createElement("button")
+        let change = document.createElement("button")
+        remove.textContent = "remove"
+        change.textContent = "change"
+        remove.setAttribute('id', 'remove')
+        change.setAttribute('id', 'change')
+        let cell1 = row.insertCell()
+        let cell2 = row.insertCell()
+        cell1.appendChild(change)
+        cell2.appendChild(remove)
+    }
+}
+
+// generates a row for newly added books
+function generateRow(table, element){
+    let row = table.insertRow()
+    for(key in element){
+        // if value is a function (from prototype) skipp
+        if (typeof element[key] === 'function'){continue};
+        let cell = row.insertCell();
+        let text = document.createTextNode(element[key]);
+        cell.appendChild(text)
+    }
+        let remove = document.createElement("button");
+        let change = document.createElement("button");
+        remove.textContent = "remove";
+        change.textContent = "change";
+        remove.setAttribute('id', 'remove')
+        change.setAttribute('id', 'change')
+        let cell1 = row.insertCell();
+        let cell2 = row.insertCell();
+        cell1.appendChild(change)
+        cell2.appendChild(remove)
+}
+
+
 
 let dune = new Book('Dune', 'Frank Herbert', 600 , true);
 let when_crickets_cry = new Book ('When Crickets Cry', 'Charles Martin', 334, false);
@@ -48,6 +128,25 @@ myLibrary.push(dune);
 myLibrary.push(when_crickets_cry);
 myLibrary.push(win_friends);
 
-let table = document.querySelector("table");
+console.log(dune)
+
+
 let data = Object.keys(myLibrary[0]);
 generateTableHead(table, data);
+generateTable(table, myLibrary);
+
+// adding event listners to elements
+//unhide form if when add book button is clicked
+add_book.addEventListener('click', () =>{
+    form.style.display = "block";
+})
+
+table.addEventListener('click', function(e){
+    if(e.target.id === "remove"){
+        console.log('remove button clicked')
+    }
+    else if(e.target.id === "change") {
+        console.log(e.target.parentElement.parentElement.rowIndex)
+        
+    }
+} )
