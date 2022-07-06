@@ -1,4 +1,9 @@
 let myLibrary = [];
+ 
+const toggle = {
+    true: false,
+    false: true,
+};
 
 // get empty table from html
 let table = document.querySelector("table");
@@ -44,7 +49,6 @@ function addBookToLibrary() {
     generateRow(table, new_book)
     // rehide form
     form.style.display = "none";
-    console.log(table)
 
 }
 
@@ -128,7 +132,6 @@ myLibrary.push(dune);
 myLibrary.push(when_crickets_cry);
 myLibrary.push(win_friends);
 
-console.log(dune)
 
 
 let data = Object.keys(myLibrary[0]);
@@ -141,12 +144,22 @@ add_book.addEventListener('click', () =>{
     form.style.display = "block";
 })
 
+
 table.addEventListener('click', function(e){
+    // delete table row and remove rom array
     if(e.target.id === "remove"){
-        console.log('remove button clicked')
+        var i = e.target.parentElement.parentElement.rowIndex
+        table.deleteRow(i)
+        myLibrary.splice(i -1, 1)
     }
     else if(e.target.id === "change") {
-        console.log(e.target.parentElement.parentElement.rowIndex)
+        // get cell to the left of change button
+        var cell = e.target.parentElement.previousSibling
+        // change toggle content of cell
+        cell.textContent = toggle[(cell.textContent == 'true')]
+        // update book info
+        var i = e.target.parentElement.parentElement.rowIndex -1
+        myLibrary[i]["read"] = toggle[myLibrary[i]["read"]]
         
     }
 } )
