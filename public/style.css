@@ -1,0 +1,64 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+
+/* table */
+th, td {
+    border: 1px solid #ddd;
+}
+/* end table */
+/* add book */
+.add-book{
+    width: 6rem;
+    height: 2rem;
+    border-radius: 20px;
+    border: 2px solid#fff;
+    color: #fff;
+    background-color: #365a7d;
+    margin-top: 2rem;
+    margin-left: 2rem;
+
+}
+/* end add book */
+
+/* form */
+.new-book{
+    position: relative;
+    background: #4b7793; 
+    margin-top: 2rem;
+    margin-left: 3rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-flow: column nowrap; 
+    width: 30vw
+}
+
+.new-book input{
+ width: 75%;
+ margin: 0.5rem 0;
+}
+.new-book #read{
+    margin-bottom: 2rem;;
+    
+}
+.new-book label{
+    color: #fff;
+}
+
+.new-book #save{
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+    width: 25%;
+    height: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid#fff;
+    color: #fff;
+    background-color: #365a7d;
+    
+}
+/* end form */

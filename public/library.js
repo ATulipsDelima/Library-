@@ -8,7 +8,7 @@ const toggle = {
 // get empty table from html
 let table = document.querySelector("table");
 let add_book = document.querySelector(".add-book")
-let form = document.querySelector("form")
+let form = document.querySelector(".new-book")
 
 // creating buttons for table
 let remove = document.createElement("button")
@@ -141,7 +141,7 @@ generateTable(table, myLibrary);
 // adding event listners to elements
 //unhide form if when add book button is clicked
 add_book.addEventListener('click', () =>{
-    form.style.display = "block";
+    form.style.display = "flex";
 })
 
 
